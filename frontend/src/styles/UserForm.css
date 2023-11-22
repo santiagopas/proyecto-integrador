@@ -1,0 +1,45 @@
+/* UserForm.css */
+
+.user-form {
+	max-width: 400px;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+}
+
+label {
+	display: block;
+	margin-bottom: 10px;
+}
+
+input {
+	width: 100%;
+	padding: 8px;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	box-sizing: border-box;
+}
+
+.submit-button {
+	background-color: #4caf50;
+	color: white;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.submit-button:hover {
+	background-color: #45a049;
+}
+
+.password-mismatch {
+	border: 1px solid #ff0000;
+}
+
+.error-message {
+	color: #ff0000;
+	margin-top: 5px;
+	font-size: 14px;
+}

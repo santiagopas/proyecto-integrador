@@ -1,7 +1,6 @@
 // controllers/userController.js
 
-
-const User = require('../models/User.js'); // Asegúrate de tener un modelo User configurado
+const User = require('../models/User.js');
 
 const getAllUsers = async (req, res) => {
   try {
@@ -19,30 +18,62 @@ const createUser = async (req, res) => {
     await newUser.save();
     res.json(newUser);
   } catch (error) {
-    console.error('Error al crear usuario:', error);
+    console.error('Error al crear usuario:', error.message);
     res.status(500).send('Error interno del servidor');
   }
 };
-const getUserById = (req, res) => {
-	// Lógica para obtener un usuario por ID desde la base de datos
-	res.send(`Obteniendo usuario con ID ${req.params.id}`);
+
+const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error('Error al obtener usuario por ID:', error.message);
+    res.status(500).send('Error interno del servidor');
+  }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
 
-const updateUser = (req, res) => {
-	// Lógica para actualizar un usuario por ID en la base de datos
-	res.send(`Actualizando usuario con ID ${req.params.id}`);
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.json(updatedUser);
+  } catch (error) {
+    console.error('Error al actualizar usuario:', error.message);
+    res.status(500).send('Error interno del servidor');
+  }
 };
 
-const deleteUser = (req, res) => {
-	// Lógica para eliminar un usuario por ID desde la base de datos
-	res.send(`Eliminando usuario con ID ${req.params.id}`);
+const deleteUser = async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    res.json({ message: 'Usuario eliminado exitosamente' });
+  } catch (error) {
+    console.error('Error al eliminar usuario:', error.message);
+    res.status(500).send('Error interno del servidor');
+  }
 };
 
 module.exports = {
-	getAllUsers,
-	getUserById,
-	createUser,
-	updateUser,
-	deleteUser,
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
 };

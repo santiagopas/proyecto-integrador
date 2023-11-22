@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import { getUsers, createUser } from "../services/api";
+import {
+  getUsers,
+  createUser,
+  getUserById,
+  updateUser,
+  deleteUser,
+} from "../services/api";
+import UserItem from "./UserItem";
+import UserForm from "./UserForm";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({
-    name: "",
-    email: "",
-    userName: "",
-    password: "",
-  });
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
     getUsers()
@@ -16,23 +19,80 @@ const UserList = () => {
       .catch((error) => console.error("Error al obtener usuarios:", error));
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewUser({ ...newUser, [name]: value });
+  const handleGetUserById = (id) => {
+    getUserById(id)
+      .then((response) => {
+        console.log("Usuario obtenido por ID:", response.data);
+        // Puedes realizar acciones con el usuario obtenido, como mostrarlo en un modal, etc.
+      })
+      .catch((error) =>
+        console.error("Error al obtener usuario por ID:", error)
+      );
   };
 
-  const handleCreateUser = () => {
+  const handleSelectForUpdate = (id) => {
+    setSelectedUserId(id);
+    
+  };
+
+  const handleDeleteUser = (id) => {
+    deleteUser(id)
+      .then(() => {
+        getUsers()
+          .then((response) => setUsers(response.data))
+          .then(() => setSelectedUserId(null))
+          .then(() => console.log("Usuario eliminado exitosamente"))
+          .catch((error) =>
+            console.error(
+              "Error al obtener usuarios después de eliminar uno:",
+              error
+            )
+          );
+      })
+      .catch((error) =>
+        console.error("Error al eliminar usuario:", error.message)
+      );
+  };
+
+  const handleCreateUser = (newUser) => {
     createUser(newUser)
       .then(() => {
         getUsers()
           .then((response) => setUsers(response.data))
-          .then(() => setNewUser({ name: "", email: "", userName: "", password: "" }))
           .then(() => console.log("Usuario creado exitosamente"))
           .catch((error) =>
-            console.error("Error al obtener usuarios después de crear uno nuevo:", error)
+            console.error(
+              "Error al obtener usuarios después de crear uno nuevo:",
+              error
+            )
           );
       })
-      .catch((error) => console.error("Error al crear usuario:", error.message));
+      .catch((error) =>
+        console.error("Error al crear usuario:", error.message)
+      );
+  };
+
+  const handleUpdateUser = (updatedUser, id) => {
+    updateUser(id, updatedUser)
+      .then(() => {
+        getUsers()
+          .then((response) => setUsers(response.data))
+          .then(() => setSelectedUserId(null))
+          .then(() => console.log("Usuario actualizado exitosamente"))
+          .catch((error) =>
+            console.error(
+              "Error al obtener usuarios después de actualizar uno:",
+              error
+            )
+          );
+      })
+      .catch((error) =>
+        console.error("Error al actualizar usuario:", error.message)
+      );
+  };
+
+  const resetSelectedUser = () => {
+    setSelectedUserId(null);
   };
 
   return (
@@ -40,38 +100,22 @@ const UserList = () => {
       <h1>Lista de Usuarios</h1>
       <ul>
         {users.map((user) => (
-          <li key={user._id}>
-            <p>{user.name}</p>
-            <p>{user.email}</p>
-            <p>{user.userName}</p>
-            <p>{user.password}</p>
-            <p>{user.role}</p>
-            <p>{user.createdAt}</p>
-          </li>
+          <UserItem
+            key={user._id}
+            user={user}
+            onGetUserById={handleGetUserById}
+            onSelectForUpdate={handleSelectForUpdate}
+            onDeleteUser={handleDeleteUser}
+          />
         ))}
       </ul>
 
-      <form onSubmit={(e) => e.preventDefault()}>
-        <label>
-          Nombre:
-          <input type="text" name="name" value={newUser.name} onChange={handleInputChange} />
-        </label>
-        <label>
-          Email:
-          <input type="email" name="email" value={newUser.email} onChange={handleInputChange} />
-        </label>
-        <label>
-          Nombre de Usuario:
-          <input type="text" name="userName" value={newUser.userName} onChange={handleInputChange} />
-        </label>
-        <label>
-          Contraseña:
-          <input type="password" name="password" value={newUser.password} onChange={handleInputChange} />
-        </label>
-        <button type="button" onClick={handleCreateUser}>
-          Crear Nuevo Usuario
-        </button>
-      </form>
+      <UserForm
+        onCreateUser={handleCreateUser}
+        onUpdateUser={handleUpdateUser}
+        selectedUserId={selectedUserId}
+        resetSelectedUser={resetSelectedUser}
+      />
     </div>
   );
 };

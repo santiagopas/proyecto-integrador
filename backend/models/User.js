@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
 
-	name: {
+  name: {
     type: String,
     required: true,
     trim: true,
@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     match: [/\S+@\S+\.\S+/, 'Dirección de correo electrónico no válida'],
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
   },
   userName: {
     type: String,

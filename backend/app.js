@@ -7,7 +7,9 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+}));
 
 // Configuración de Express aquí
 app.use(express.json());
