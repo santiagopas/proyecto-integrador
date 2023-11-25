@@ -11,7 +11,7 @@ app.use(cors({
   origin: 'http://localhost:5173',
 }));
 
-// Configuración de Express aquí
+
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
@@ -48,5 +48,5 @@ app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
 
-// Exportar la instancia de Express (opcional, depende de tus necesidades)
+
 module.exports = app;
