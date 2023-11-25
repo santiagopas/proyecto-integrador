@@ -1,0 +1,13 @@
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #282c34;
+	padding-block: 0.5rem;
+	padding-inline: 1rem;
+}
+
+.header-logo {
+	color: hsl(0, 0%, 100%);
+}
