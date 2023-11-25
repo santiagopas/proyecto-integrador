@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { createProduct } from "../services/api";
 import { uploadFile } from "../firebase/config";
-import "../styles/ProductForm.css";
+import "../styles/components/ProductForm.css";
 
 const ProductForm = ({ onSubmit }) => {
   const [product, setProduct] = useState({

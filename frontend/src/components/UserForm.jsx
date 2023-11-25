@@ -1,8 +1,6 @@
-// UserForm.jsx
-
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import "../styles/UserForm.css";
+import "../styles/components/UserForm.css";
 
 const UserForm = ({
   onCreateUser,

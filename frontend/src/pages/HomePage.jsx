@@ -1,9 +1,12 @@
-
+import HeroBanner from "../components/HeroBanner.jsx";
+import "../styles/pages/HomePage.css";
 
 const HomePage = () => {
   return (
-	<div>HomePage</div>
-  )
-}
+    <>
+      <HeroBanner />
+    </>
+  );
+};
 
-export default HomePage
+export default HomePage;

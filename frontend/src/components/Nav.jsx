@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import "../styles/Nav.css";
-import "../styles/MobileNav.css";
+import "../styles/components/Nav.css";
+import "../styles/components/MobileNav.css";
 import { AiOutlineMenuFold } from "react-icons/ai";
 
 const Nav = () => {
