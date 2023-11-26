@@ -1,6 +1,9 @@
+
 .nav {
 	padding-block: 0.5rem;
 	padding-inline: 1rem;
+	/* background-color: hsl(220, 13%, 18%); */
+	/* color: hsl(0, 0%, 100%); */
 }
 
 .menu-icon{
@@ -21,10 +24,12 @@
 	font-weight: bold;
 	font-size: 16px;
 	transition: color 0.3s ease-in-out;
-	color: hsl(0, 0%, 100%);
-
 }
 
+.nav a:visited {
+	color: transparent	;
+
+}
 .nav a:hover {
-	color: #00ffdd;
+	color: #1DB954; /* Spotify green */
 }

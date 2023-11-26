@@ -51,3 +51,14 @@ a:link,
 a:visited {
   text-decoration: none;
 }
+
+.dark {
+  background-color: hsl(220, 13%, 18%);
+  color: #fff;
+}
+
+.light {
+  background-color: #fff;
+  color: hsl(220, 13%, 18%);
+
+}
